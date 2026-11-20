@@ -1,10 +1,10 @@
 
-## Visual Inspection & Read-Level Verification (IGV / samtools tview)
+## Visual Inspection & Read-Level Verification
 Once we have prioritized a shortlist of candidate variants (candidate_clinical_variants.tsv), automated database annotations are never trusted blindly. The final step in variant assessment is visual read alignment verification-confirming that the candidate variants are supported by genuine sequencing reads rather than alignment artifacts, homopolymer slippage, or pseudogene mismapping.
 
 We can verify candidate variants directly in the terminal using samtools tview or visually in IGV (Integrative Genomics Viewer) on Windows.
 
-1. Pick the top candidate variant coordinates from your shortlist:  
+1. Pick the top candidate variant coordinates from your shortlist   
 ```Bash
 awk -F'\t' 'BEGIN {OFS="\t"} NR>1 {print $1":"$2, $5">"$6, "GT="$8, "AD="$9, "Gene="$11, "Conseq="$12, "ClinVar="$18}' candidate_clinical_variants.tsv | head -n 5
 ```

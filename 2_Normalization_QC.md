@@ -4,7 +4,7 @@ Now, we have raw_variants.vcf.gz, we assess technical call quality before lookin
 
 First, generate baseline summary statistics on our raw calls, then apply standard quality filters to separate high-confidence variants from sequencing noise.
 
-### Generate raw variant statistics:
+### Generate raw variant statistics
 ```Bash
 bcftools stats raw_variants.vcf.gz > raw_stats.txt
 
@@ -27,7 +27,7 @@ SN      0       number of multiallelic SNP sites:       31
 TSTV    0       61707   30053   2.05    61698   30031   2.05
 ```
 
-### Normalize indels and apply hard quality filters:
+### Normalize indels and apply hard quality filters
 Before filtering, left-align and normalize indels (bcftools norm) so complex variants are represented consistently, then filter out low-confidence calls (QUAL < 30, read depth DP < 10, or excessive strand bias SP > 60):
 
 ```Bash
@@ -55,7 +55,7 @@ bcftools index pass_variants.vcf.gz
 *How this works*: bcftools norm -m -any: Splits multiallelic sites into separate biallelic records and left-aligns indels against chr20.fa.
 bcftools filter -s "LowQual": Soft-filters variants failing the thresholds by tagging their FILTER column with LowQual while passing good calls as PASS (preserving records so you can inspect what was excluded).
 
-### Extract only PASS variants and check the improved Ts/Tv ratio:
+### Extract only PASS variants and check the improved Ts/Tv ratio
 ```Bash
 bcftools view -f PASS filtered_variants.vcf.gz -Oz -o pass_variants.vcf.gz
 bcftools index pass_variants.vcf.gz
