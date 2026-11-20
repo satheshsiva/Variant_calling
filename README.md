@@ -45,22 +45,22 @@ Aligned BAM + Reference FASTA
 ```
 
 ### Key Features
-Generate raw variants from aligned sequencing reads.
-Normalize indels and filter low-quality variants.
-Benchmark calls against GIAB high-confidence regions.
-Annotate variants with functional consequences, clinical significance, and population frequencies.
-Prioritize rare and potentially damaging variants.
-Visually inspect candidate variants using aligned sequencing reads.
+Generate raw variants from aligned sequencing reads.  
+Normalize indels and filter low-quality variants.  
+Benchmark calls against GIAB high-confidence regions.  
+Annotate variants with functional consequences, clinical significance, and population frequencies.  
+Prioritize rare and potentially damaging variants.  
+Visually inspect candidate variants using aligned sequencing reads.  
 
 ### Tools & Resources
-SAMtools
-BCFtools
-Ensembl VEP
-SnpEff
-ClinVar
-gnomAD
-IGV
-Genome in a Bottle
+SAMtools  
+BCFtools  
+Ensembl VEP  
+SnpEff  
+ClinVar  
+gnomAD  
+IGV  
+Genome in a Bottle  
 
 ### Repository Structure
 ```
@@ -69,18 +69,19 @@ Variant_calling/
 ├── README.md
 ├── LICENSE
 │
-├── Step_1_Variant_Calling/
-├── Step_2_Normalization_QC/
-├── Step_3_Functional_Annotation/
-├── Step_4_Candidate_Prioritization/
-├── Step_5_Read_Verification/
+├── 1_Variant_Calling.md
+├── 2_Normalization_QC.md
+├── 3_Functional_Annotation.md
+├── 4_Candidate_Prioritization.md
+├── 5_Read_Verification.md
 │
 └── Results/
-    ├── VCF_Samples/
-    ├── Statistics/
-    ├── Annotation_Tables/
-    └── IGV_Screenshots/
+    ├── master_variants.tsv
+    ├── candidate_clinical_variants.tsv
+    ├── tview.jpg
+
 ```
+
 ### Final Outputs
 Raw and quality-filtered VCF files.
 Variant QC statistics and benchmarking metrics.
@@ -93,3 +94,5 @@ This project is intended for educational and research purposes. Variant prioriti
 
 ### License
 Distributed under the MIT License. See LICENSE for details.
+
+__END__

@@ -1,0 +1,7 @@
+CHROM	POS	RS_ID	CLINVAR_ID	REF	ALT	QUAL	GENOTYPE	ALLELIC_DEPTH	TOTAL_DEPTH	GENE	CONSEQUENCE	IMPACT	CANONICAL	GNOMAD_AF	SIFT	POLYPHEN	CLINVAR_SIG	CLINVAR_DISEASE
+20	1791760	rs.	.	C	G	159.624	0/1	6,12	18	RP5-968J1.1	splice_donor_variant&non_coding_transcript_variant	HIGH	YES	.	.	.	.	.
+20	1895950	rs.	.	C	G	225.417	1/1	0,25	25	SIRPA	missense_variant	MODERATE	.	.	deleterious(0.01)	benign(0.437)	.	.
+20	2465304	rs.	4448480	T	A	218.406	0/1	20,20	40	ZNF343	splice_acceptor_variant	HIGH	YES	0.00260073	.	.	.	.
+20	11790885	rs.	.	C	CTT	228.318	1/1	2,28	30	AL080274.1	splice_acceptor_variant&non_coding_transcript_variant	HIGH	YES	.	.	.	.	.
+20	12901275	rs.	.	G	A	182.404	0/1	19,19	38	RP5-1069C8.2	splice_donor_variant&non_coding_transcript_variant	HIGH	YES	.	.	.	.	.
+20	18119044	rs.	.	G	T	204.018	0/1	14,24	38	CSRP2BP	splice_donor_variant&non_coding_transcript_variant	HIGH	.	.	.	.	.	.

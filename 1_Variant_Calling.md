@@ -1,6 +1,6 @@
 **Variant Calling**
 
-Install necessary tools in linux env.
+Install necessary tools in linux env.  
 Codes are optimized for WSL2.
 
 ```bash
@@ -21,6 +21,7 @@ mamba install -c bioconda samtools bcftools
 ```
 
 This is a sample, we don't need actual BAM files for this run. So, I am downloading chr20 alone.
+
 ```bash
 # 1. Stream ONLY chromosome 20 directly from the remote GIAB BAM
 samtools view -b \
@@ -66,7 +67,5 @@ bcftools view -H raw_variants.vcf.gz | head -n 5
 20      63244   .       A       C       222.306 .       DP=43;VDB=0.882013;SGB=-0.692831;RPBZ=1.28431;MQBZ=0;MQSBZ=0;BQBZ=0.0129639;SCBZ=0;MQ0F=0;AC=1;AN=2;DP4=9,9,12,12;MQ=60 GT:PL:DP:SP:AD:GQ       0/1:255,0,209:42:0:18,24:127
 20      63799   .       C       T       113.845 .       DP=37;VDB=0.190927;SGB=-0.680642;RPBZ=1.6875;MQBZ=0;MQSBZ=0;BQBZ=-0.431394;SCBZ=0;MQ0F=0;AC=1;AN=2;DP4=12,13,7,5;MQ=60  GT:PL:DP:SP:AD:GQ       0/1:147,0,243:37:1:25,12:127
 ```
-
-Raw VCF file was generated, let us move to step 2.
 
 __END__
