@@ -1,10 +1,10 @@
 # Variant Calling and Annotation Pipeline
 An end-to-end bioinformatics workflow for identifying, filtering, annotating, prioritizing, and validating genetic variants using open-source tools.
 
-Dataset: GIAB NA12878 (HG001)
-Reference Genome: GRCh37 / hg19
-Analysis Region: Chromosome 20
-Environment: Linux / WSL2
+Dataset: GIAB NA12878 (HG001)  
+Reference Genome: GRCh37 / hg19  
+Analysis Region: Chromosome 20  
+Environment: Linux / WSL2  
 
 ### Workflow Overview
 | Step | Analysis                         | Tools                                |
@@ -83,11 +83,11 @@ Variant_calling/
 ```
 
 ### Final Outputs
-Raw and quality-filtered VCF files.
-Variant QC statistics and benchmarking metrics.
-Functionally and clinically annotated VCF.
-Prioritized candidate variant table (TSV/CSV).
-IGV screenshots and read-level verification results.
+Raw and quality-filtered VCF files.  
+Variant QC statistics and benchmarking metrics.  
+Functionally and clinically annotated VCF.  
+Prioritized candidate variant table (TSV/CSV).  
+IGV screenshots and read-level verification results.  
 
 ### Notes
 This project is intended for educational and research purposes. Variant prioritization does not establish clinical pathogenicity or replace clinical interpretation.

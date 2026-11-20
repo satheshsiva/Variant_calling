@@ -1,4 +1,4 @@
-**Variant Calling**
+## Variant Calling
 
 Install necessary tools in linux env.  
 Codes are optimized for WSL2.

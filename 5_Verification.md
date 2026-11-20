@@ -37,7 +37,7 @@ Read Ends: Check that the variant sits in the middle of reads rather than cluste
 
 Homopolymer Runs / Repetitive Sequence: Look at the reference sequence row at the top of tview. Indels inside long stretches of identical bases (e.g., AAAAAAAAA or TTTTTTTTT) are frequently polymerase slippage artifacts.
 
-Optional - Inspect in Desktop IGV (Windows):
+Optional - Inspect in Desktop IGV (Windows):  
 The files we need to visualize are are already accessible on our location. Please open IGV on Windows:
 
 Select genome Human (hg19) (which matches GRCh37 coordinates).

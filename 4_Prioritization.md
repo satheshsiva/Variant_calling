@@ -49,8 +49,7 @@ bcftools +split-vep \
   vep_annotated.vcf.gz | head -n 15
 ```
 
-*Verification*:
-We should see a clean table listing gene symbols, functional consequences (such as missense_variant or stop_gained), impact severity (MODERATE or HIGH), gnomAD population frequency, and SIFT/PolyPhen scores.
+*Verification*: We should see a clean table listing gene symbols, functional consequences (such as missense_variant or stop_gained), impact severity (MODERATE or HIGH), gnomAD population frequency, and SIFT/PolyPhen scores.
 
 ### Annotation with SnpEff
 Often, the VEP freezes, meaning VEP stalled right when it started querying variants. The remote MySQL connection to Ensembl's UK server dropped silently (--database mode has no auto-reconnect). Instead of fighting network timeouts with remote VEP, install SnpEff. Its GRCh37 human database is ~120 MB (compared to VEP's 15+ GB cache), runs 100% offline on your laptop, and annotates your entire Chromosome 20 VCF in 10-15 seconds. it is an alternate annotation, it will not completely replace the VEP.
@@ -138,7 +137,7 @@ bcftools +split-vep \
 ### Merge three annotation into one VCF file
 Because vep_gnomad.vcf.gz already contains our Ensembl VEP functional predictions (INFO/CSQ) and gnomAD population frequencies (INFO/AF), we can layer ClinVar's clinical annotations directly onto it with one more bcftools annotate pass. None of the ClinVar tags (CLNSIG, CLNDN, GENEINFO, RS) collide with VEP's CSQ or gnomAD's AF, so all three datasets coexist cleanly in the INFO column.
 
-1. Layer ClinVar onto vep_gnomad.vcf.gz
+1. Layer ClinVar onto vep_gnomad.vcf.gz  
 Run bcftools annotate using the clinvar.vcf.gz file.
 
 ```Bash
@@ -163,7 +162,7 @@ We should see three matching ##INFO header lines printed.
 ##INFO=<ID=CLNSIG,Number=.,Type=String,Description="Aggregate germline classification for this single variant; multiple values are separated by a vertical bar">
 ```
 
-2. Query All Three Databases Together in One Table
+2. Query All Three Databases Together in One Table  
 Use bcftools +split-vep to unpack VEP's CSQ fields alongside gnomAD's %INFO/AF and ClinVar's %INFO/CLNSIG and %INFO/CLNDN:
 
 ```Bash
@@ -172,8 +171,7 @@ bcftools +split-vep \
   -i '(IMPACT="HIGH" || IMPACT="MODERATE") || INFO/CLNSIG!="."' \
   master_annotated.vcf.gz | head -n 6
 ```
-*What this filter does*:
-(IMPACT="HIGH" || IMPACT="MODERATE") || INFO/CLNSIG!=".": Captures every variant that either alters protein structure (HIGH or MODERATE VEP impact) or has an entry in ClinVar, displaying its sample genotype ([%GT]), gnomAD allele frequency (%INFO/AF), computational pathogenicity (%SIFT, %PolyPhen), and clinical classification (%INFO/CLNSIG) in a single row.
+*What this filter does*: (IMPACT="HIGH" || IMPACT="MODERATE") || INFO/CLNSIG!=".": Captures every variant that either alters protein structure (HIGH or MODERATE VEP impact) or has an entry in ClinVar, displaying its sample genotype ([%GT]), gnomAD allele frequency (%INFO/AF), computational pathogenicity (%SIFT, %PolyPhen), and clinical classification (%INFO/CLNSIG) in a single row.
 
 *Verification*: We should see a 14-column tab-separated table combining dbSNP rsID, genotype, gene symbol, VEP consequence, gnomAD frequency, SIFT/PolyPhen scores, and ClinVar clinical significance in each line.
 
@@ -201,7 +199,7 @@ bcftools +split-vep \
 awk -F'\t' '{for(i=1;i<=NF;i++){gsub(/,/, ";", $i)}; OFS=","; print $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19}' master_variants.tsv > master_variants.csv
 ```
 
-*Verification*: Check the row count and preview the first 5 lines of your exported table:
+*Verification*: Check the row count and preview the first 5 lines of your exported table.
 
 ```Bash
 wc -l master_variants.tsv
@@ -218,7 +216,7 @@ CHROM  POS    RS_ID  CLINVAR_ID  REF  ALT  QUAL     GENOTYPE  ALLELIC_DEPTH  TOT
 ```
 
 ### Filter for Rare, Damaging, or Pathogenic Candidate Clinical Variants
-In clinical variant interpretation, we filter out common benign polymorphisms (GNOMAD_AF less than 0.01, i.e., under 1% population frequency, or unseen .) and retain variants that are either reported as Pathogenic/Likely_pathogenic/VUS in ClinVar OR predicted to severely disrupt protein function (HIGH impact, or MODERATE missense variants flagged as deleterious by SIFT or probably_damaging by PolyPhen):
+In clinical variant interpretation, we filter out common benign polymorphisms (GNOMAD_AF less than 0.01, i.e., under 1% population frequency, or unseen .) and retain variants that are either reported as Pathogenic/Likely_pathogenic/VUS in ClinVar OR predicted to severely disrupt protein function (HIGH impact, or MODERATE missense variants flagged as deleterious by SIFT or probably_damaging by PolyPhen).
 
 ```Bash
 # 1. Write the header row
@@ -237,6 +235,7 @@ bcftools +split-vep \
 wc -l master_variants.tsv candidate_clinical_variants.tsv
 head -n 5 candidate_clinical_variants.tsv | column -t -s $'\t'
 ```
+
 Because NA12878 is a healthy benchmark sample, the count will drop from tens of thousands of raw calls down to a small, reviewable shortlist of rare coding or VUS/candidate calls.
 
 ```

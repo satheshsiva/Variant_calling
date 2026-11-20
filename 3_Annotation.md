@@ -13,7 +13,7 @@ Because downloading full offline VEP/gnomAD caches takes 15+ GB, we can run Ense
 wget https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/clinvar.vcf.gz
 wget https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/clinvar.vcf.gz.tbi
 ```
-2. Annotate our pass_variants.vcf.gz with ClinVar clinical significance & disease names:
+2. Annotate our pass_variants.vcf.gz with ClinVar clinical significance & disease names:  
 Use bcftools annotate to match your variants by exact chromosome, position, reference allele, and alternate allele, copying ClinVar's clinical significance (CLNSIG), disease name (CLNDN), and gene symbol (GENEINFO) into your VCF's INFO field:
 
 ```Bash
@@ -30,11 +30,10 @@ bcftools annotate \
 bcftools index -f annotated_clinvar.vcf.gz
 ```
 
-*What those flags do*:
--a clinvar.vcf.gz: Specifies the public annotation database VCF.  
+*What those flags do*: -a clinvar.vcf.gz: Specifies the public annotation database VCF.  
 -c INFO/CLNSIG,INFO/CLNDN,INFO/GENEINFO,ID: Transfers Clinical Significance (e.g., Benign, Pathogenic, Uncertain_significance), Condition/Disease Name, Gene Symbol, and rsID (ID column) wherever an exact variant match occurs.
 
-3. Query and inspect annotated variants in a clean table:
+3. Query and inspect annotated variants in a clean table:  
 Use bcftools query to extract only variants that matched a ClinVar entry (INFO/CLNSIG!=".") into readable columns:
 
 ```Bash
@@ -44,8 +43,7 @@ bcftools query \
   annotated_clinvar.vcf.gz | head -n 6
 ```
 
-*Verification*:
-We should see a tab-separated output showing rsIDs (e.g., rs6054257), the affected gene symbol, the sample's genotype (0/1 heterozygous or 1/1 homozygous alt), and its ClinVar classification (most variants in NA12878 will be Benign or Likely_benign, as NA12878 is a healthy reference individual).
+*Verification*: We should see a tab-separated output showing rsIDs (e.g., rs6054257), the affected gene symbol, the sample's genotype (0/1 heterozygous or 1/1 homozygous alt), and its ClinVar classification (most variants in NA12878 will be Benign or Likely_benign, as NA12878 is a healthy reference individual).
 
 ```
 20      126155  rs11467497      402585  GCAAA   G       0/1     DEFB126:81623   Benign  not_specified

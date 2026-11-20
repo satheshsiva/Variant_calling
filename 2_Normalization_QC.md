@@ -4,16 +4,16 @@ Now, we have raw_variants.vcf.gz, we assess technical call quality before lookin
 
 First, generate baseline summary statistics on our raw calls, then apply standard quality filters to separate high-confidence variants from sequencing noise.
 
-### 1. Generate raw variant statistics:
+### Generate raw variant statistics:
 ```Bash
 bcftools stats raw_variants.vcf.gz > raw_stats.txt
 
 # View key summary counts (SNPs, indels, multiallelic sites, and Ti/Tv ratio)
 grep "^SN\|^TSTV" raw_stats.txt
 ```
-*What to look for*:
-SN (Summary Numbers): Total number of records, SNPs, and indels.
+*What to look for*: SN (Summary Numbers): Total number of records, SNPs, and indels.
 TSTV (Transitions / Transversions ratio): For human whole-genome/chromosome calls, a healthy Ts/Tv ratio is ~2.0-2.1 (and ~2.8-3.0 in exomes). If your raw Ts/Tv is significantly lower (e.g., ~1.5), it indicates excess false-positive calls that need filtering.
+
 ```bash
 SN      0       number of samples:      1
 SN      0       number of records:      109246
@@ -27,7 +27,7 @@ SN      0       number of multiallelic SNP sites:       31
 TSTV    0       61707   30053   2.05    61698   30031   2.05
 ```
 
-### 2. Normalize indels and apply hard quality filters:
+### Normalize indels and apply hard quality filters:
 Before filtering, left-align and normalize indels (bcftools norm) so complex variants are represented consistently, then filter out low-confidence calls (QUAL < 30, read depth DP < 10, or excessive strand bias SP > 60):
 
 ```Bash
@@ -52,19 +52,17 @@ bcftools view -f PASS filtered_variants.vcf.gz \
 
 bcftools index pass_variants.vcf.gz
 ```
-*How this works*:
-bcftools norm -m -any: Splits multiallelic sites into separate biallelic records and left-aligns indels against chr20.fa.
+*How this works*: bcftools norm -m -any: Splits multiallelic sites into separate biallelic records and left-aligns indels against chr20.fa.
 bcftools filter -s "LowQual": Soft-filters variants failing the thresholds by tagging their FILTER column with LowQual while passing good calls as PASS (preserving records so you can inspect what was excluded).
 
-### 3. Extract only PASS variants and check the improved Ts/Tv ratio:
+### Extract only PASS variants and check the improved Ts/Tv ratio:
 ```Bash
 bcftools view -f PASS filtered_variants.vcf.gz -Oz -o pass_variants.vcf.gz
 bcftools index pass_variants.vcf.gz
 
 bcftools stats pass_variants.vcf.gz | grep "^SN\|^TSTV"
 ```
-*Verification*:
-Compare the TSTV line from raw_stats.txt against pass_variants.vcf.gz. You should see the total variant count drop slightly while the ts/tv ratio increases closer to ~2.0–2.1.
+*Verification*: Compare the TSTV line from raw_stats.txt against pass_variants.vcf.gz. You should see the total variant count drop slightly while the ts/tv ratio increases closer to ~2.0-2.1.
 ```
 SN      0       number of samples:      1
 SN      0       number of records:      103926
@@ -115,11 +113,11 @@ bcftools index query_chr20_highconf.vcf.gz
 
 3. Intersect our calls with the GIAB truth set using bcftools isec:bcftools isec splits variants into three buckets:
 
-*Tabspace*0000.vcf: False Positives (FP) - called by our pipeline, but absent in GIAB truth.
+    0000.vcf: False Positives (FP) - called by our pipeline, but absent in GIAB truth.
 
-*Tabspace*0001.vcf: False Negatives (FN) - present in GIAB truth, but missed by our pipeline.
+    0001.vcf: False Negatives (FN) - present in GIAB truth, but missed by our pipeline.
 
-*Tabspace*0002.vcf: True Positives (TP) - present in both our calls and GIAB truth.
+    0002.vcf: True Positives (TP) - present in both our calls and GIAB truth.
 
 ```Bash
 bcftools isec -p isec_benchmark query_chr20_highconf.vcf.gz giab_truth_chr20.vcf.gz
@@ -137,8 +135,7 @@ awk -v tp="$TP" -v fp="$FP" -v fn="$FN" 'BEGIN {
 }'
 ```
 
-*Verification*:
-We should see a summary printout showing your exact TP, FP, FN counts alongside Precision, Recall, and F1 Score (typically ~96%-99%+ Precision and Recall for SNPs in high-confidence regions on 30x NA12878 data).
+*Verification*: We should see a summary printout showing your exact TP, FP, FN counts alongside Precision, Recall, and F1 Score (typically ~96%-99%+ Precision and Recall for SNPs in high-confidence regions on 30x NA12878 data).
 
 ```
 True Positives (TP):  78239
