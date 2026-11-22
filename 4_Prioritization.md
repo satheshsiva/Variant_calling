@@ -51,7 +51,7 @@ bcftools +split-vep \
 
 *Verification*: We should see a clean table listing gene symbols, functional consequences (such as missense_variant or stop_gained), impact severity (MODERATE or HIGH), gnomAD population frequency, and SIFT/PolyPhen scores.
 
-### Annotation with SnpEff
+## Annotation with SnpEff
 Often, the VEP freezes, meaning VEP stalled right when it started querying variants. The remote MySQL connection to Ensembl's UK server dropped silently (--database mode has no auto-reconnect). Instead of fighting network timeouts with remote VEP, install SnpEff. Its GRCh37 human database is ~120 MB (compared to VEP's 15+ GB cache), runs 100% offline on your laptop, and annotates your entire Chromosome 20 VCF in 10-15 seconds. it is an alternate annotation, it will not completely replace the VEP.
 
 ```Bash
