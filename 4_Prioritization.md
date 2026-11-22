@@ -23,7 +23,7 @@ vep \
   --port 3337 \
   --symbol \
   --canonical \
-  --af_gnomade \
+  --check_existing \
   --sift b \
   --polyphen b \
   --force_overwrite
